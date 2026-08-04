@@ -8,6 +8,7 @@ export enum configKeys {
 
 export const appConfig = registerAs(configKeys.App, () => ({
   port: Number(process.env.PORT) || 3000,
+  url: process.env.APP_URL,
 }));
 
 export const dbConfig = registerAs(configKeys.Db, () => ({

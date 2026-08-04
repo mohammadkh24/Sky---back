@@ -5,6 +5,9 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmDbConfig } from './config/typeorm-db-config';
+import { PropertyModule } from './modules/property/property.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -14,6 +17,11 @@ import { TypeOrmDbConfig } from './config/typeorm-db-config';
       load : configurations
     }),
 
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveRoot: '/uploads',
+    }),
+
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmDbConfig,
       inject: [ConfigService],
@@ -21,6 +29,7 @@ import { TypeOrmDbConfig } from './config/typeorm-db-config';
     
     UserModule,
     AuthModule,
+    PropertyModule,
   ],
 
 })

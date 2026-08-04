@@ -9,10 +9,12 @@ import { AllExceptionsFilter } from './common/filters/exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   const configService = app.get(ConfigService);
   const server = app.getHttpAdapter().getInstance();
 
-  const port = configService.get('app.port');
+  const port =
+    process.env.PORT || configService.get<number>('app.port') || 3000;
 
   app.enableCors({
     origin: '*',
@@ -24,7 +26,7 @@ async function bootstrap() {
       'Origin',
       'X-Requested-With',
     ],
-    credentials: true, // اگر کوکی می‌خوای بفرستی
+    credentials: true,
   });
 
   app.useGlobalPipes(
@@ -37,6 +39,7 @@ async function bootstrap() {
   );
 
   app.useGlobalInterceptors(new TransformInterceptor());
+
   app.useGlobalFilters(new AllExceptionsFilter());
 
   const swaggerConfig = new DocumentBuilder()
@@ -49,18 +52,18 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
+
   SwaggerModule.setup('docs', app, document);
 
   server.get('/docs/json', (_req: Request, res: Response) => {
     res.json(document);
   });
 
-  await app.listen(port, () => {
-    console.log(`Server listening on port ${port}...`);
-    console.log(`Swagger UI available at http://localhost:${port}/docs`);
-    console.log(
-      `Swagger JSON available at http://localhost:${port}/swagger/json`,
-    );
+  await app.listen(Number(port), '0.0.0.0', () => {
+    console.log(`Server listening on port ${port}`);
+
+    console.log(`Swagger UI available at /docs`);
   });
 }
+
 bootstrap();

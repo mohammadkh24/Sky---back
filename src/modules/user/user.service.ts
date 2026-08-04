@@ -58,4 +58,12 @@ export class UserService {
       data: user,
     };
   }
+
+  async findByUsernameWithPassword(username: string) {
+    return this.userRepo
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where('user.username = :username', { username })
+      .getOne();
+  }
 }

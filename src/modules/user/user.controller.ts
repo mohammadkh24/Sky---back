@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -13,9 +14,12 @@ import {
 
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { AuthGuard } from 'src/common/guards/auth.guard';
 
 
 @ApiTags('Users')
+@Controller('properties')
+@UseGuards(AuthGuard)
 @Controller('users')
 export class UserController {
 

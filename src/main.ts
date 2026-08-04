@@ -44,7 +44,7 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('sky')
-    .setDescription('Amlaki kooni')
+    .setDescription('Sky project')
     .addBearerAuth()
     .setVersion('1.0.0')
     .addTag('Auth')

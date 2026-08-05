@@ -6,6 +6,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiResponse,
@@ -18,9 +19,9 @@ import { AuthGuard } from 'src/common/guards/auth.guard';
 
 
 @ApiTags('Users')
-@Controller('properties')
-@UseGuards(AuthGuard)
 @Controller('users')
+@UseGuards(AuthGuard)
+@ApiBearerAuth()
 export class UserController {
 
   constructor(

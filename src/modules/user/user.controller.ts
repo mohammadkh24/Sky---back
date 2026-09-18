@@ -20,8 +20,8 @@ import { AuthGuard } from 'src/common/guards/auth.guard';
 
 @ApiTags('Users')
 @Controller('users')
-@UseGuards(AuthGuard)
-@ApiBearerAuth()
+// @UseGuards(AuthGuard)
+// @ApiBearerAuth()
 export class UserController {
 
   constructor(
